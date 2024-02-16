@@ -12,18 +12,47 @@ import 'package:facebook_clone_bloc/features/auth/utils/validation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class CreateAccountPage extends StatelessWidget {
+class CreateAccountPage extends StatefulWidget {
   const CreateAccountPage({super.key});
 
   @override
+  State<CreateAccountPage> createState() => _CreateAccountPageState();
+}
+
+class _CreateAccountPageState extends State<CreateAccountPage> {
+  File? image;
+  DateTime? birthday;
+  String gender = 'male';
+  final formKey = GlobalKey<FormState>();
+  late final TextEditingController firstNameController;
+  late final TextEditingController lastNameController;
+  late final TextEditingController emailController;
+  late final TextEditingController passwordController;
+
+  @override
+  void initState() {
+    super.initState();
+    firstNameController = TextEditingController();
+    lastNameController = TextEditingController();
+    emailController = TextEditingController();
+    passwordController = TextEditingController();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    File? image;
-    DateTime? birthday;
-    String gender = "male";
-    final TextEditingController firstNameController = TextEditingController();
-    final TextEditingController lastNameController = TextEditingController();
-    final TextEditingController emailController = TextEditingController();
-    final TextEditingController passwordController = TextEditingController();
+    void createAccount() async {
+      if (formKey.currentState!.validate()) {
+        formKey.currentState!.save();
+        await AuthCubit.get(context).signUp(
+          fullName: '${firstNameController.text} ${lastNameController.text}',
+          birthday: birthday ?? DateTime.now(),
+          gender: gender,
+          email: emailController.text,
+          password: passwordController.text,
+          image: image,
+        );
+      }
+    }
 
     return BlocConsumer<AuthCubit, AuthState>(
       listener: (context, state) {
@@ -43,11 +72,13 @@ class CreateAccountPage extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: Form(
+                key: formKey,
                 child: Column(
                   children: [
                     GestureDetector(
                       onTap: () async {
                         image = await pickImage();
+                        setState(() => image);
                       },
                       child: ImagePickerWidget(image: image),
                     ),
@@ -83,6 +114,7 @@ class CreateAccountPage extends StatelessWidget {
                             context: context,
                             date: birthday,
                           );
+                          setState(() => birthday);
                         },
                       ),
                     ),
@@ -93,6 +125,7 @@ class CreateAccountPage extends StatelessWidget {
                         gender: gender,
                         onChanged: (value) {
                           gender = value ?? "male";
+                          setState(() => gender);
                         },
                       ),
                     ),
@@ -115,17 +148,7 @@ class CreateAccountPage extends StatelessWidget {
                       const Center(child: CircularProgressIndicator())
                     else
                       GeneralButton(
-                        onPressed: () {
-                          cubit.signUp(
-                            fullName:
-                                '${firstNameController.text} ${lastNameController.text}',
-                            birthday: birthday ?? DateTime.now(),
-                            gender: gender,
-                            email: emailController.text,
-                            password: passwordController.text,
-                            image: image,
-                          );
-                        },
+                        onPressed: createAccount,
                         label: 'Create Account',
                       ),
                   ],

@@ -1,13 +1,11 @@
 import 'dart:async';
 import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:facebook_clone_bloc/core/firebase_constants/firebase_collection_category_name.dart';
 import 'package:facebook_clone_bloc/core/firebase_constants/firebase_field_names.dart';
 import 'package:facebook_clone_bloc/core/widgets/toast.dart';
 import 'package:facebook_clone_bloc/features/auth/data/repo/auth_repo_imp.dart';
 import 'package:facebook_clone_bloc/features/auth/model/user_model.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'auth_state.dart';
@@ -86,12 +84,11 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
-  Stream<UserModel> getUserInfoAsStream() {
+  Stream<UserModel> getUserInfoAsStream(String userId) {
     final controller = StreamController<UserModel>();
     final sub = FirebaseFirestore.instance
         .collection(FirebaseCollectionCategoryName.users)
-        .where(FirebaseFieldNames.uid,
-            isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+        .where(FirebaseFieldNames.uid, isEqualTo: userId)
         .limit(1)
         .snapshots()
         .listen((snapshot) {

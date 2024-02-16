@@ -1,4 +1,5 @@
 import 'package:facebook_clone_bloc/core/constants/color_constants.dart';
+import 'package:facebook_clone_bloc/features/posts/presentation/view/screens/posts_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -58,12 +59,12 @@ class HomeCubit extends Cubit<HomeState> {
   }
 
   List<Widget> screens = [
+    const PostsPage(),
+    const SizedBox(),
     SizedBox(),
     SizedBox(),
     SizedBox(),
-    SizedBox(),
-    SizedBox(),
-    // const PostsPage(),
+
     // const FriendsScreen(),
     // const VideosScreen(),
     // const Center(

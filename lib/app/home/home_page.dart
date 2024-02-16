@@ -3,6 +3,7 @@ import 'package:facebook_clone_bloc/app/home/home_state.dart';
 import 'package:facebook_clone_bloc/core/constants/color_constants.dart';
 import 'package:facebook_clone_bloc/core/constants/tabs.dart';
 import 'package:facebook_clone_bloc/core/widgets/circle_icon_button.dart';
+import 'package:facebook_clone_bloc/features/auth/presentation/managers/auth_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -55,7 +56,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               ),
               CircleIconButton(
                 onPressed: () {
-                  // ref.read(authProvider).signOut();
+                  AuthCubit.get(context).signOut();
                 },
                 icon: FontAwesomeIcons.arrowRightFromBracket,
               )

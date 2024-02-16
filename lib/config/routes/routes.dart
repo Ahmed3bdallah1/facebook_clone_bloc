@@ -1,6 +1,7 @@
 import 'package:facebook_clone_bloc/app/home/home_page.dart';
 import 'package:facebook_clone_bloc/features/auth/presentation/view/screens/create_account.dart';
 import 'package:facebook_clone_bloc/features/auth/presentation/view/screens/login_screen.dart';
+import 'package:facebook_clone_bloc/features/posts/presentation/view/screens/add_post_screen.dart';
 import 'package:flutter/material.dart';
 
 class Routes {
@@ -19,8 +20,8 @@ class Routes {
       case createAccount:
         return MaterialPageRoute(builder: (_) => const CreateAccountPage());
       //
-      // case createPost:
-      //   return MaterialPageRoute(builder: (_) => const AddPostScreen());
+      case createPost:
+        return MaterialPageRoute(builder: (_) => const AddPostScreen());
       //
       // case createStory:
       //   return MaterialPageRoute(builder: (_) => const CreateStoryScreen());
