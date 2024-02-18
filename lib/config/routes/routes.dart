@@ -1,4 +1,5 @@
 import 'package:facebook_clone_bloc/app/home/home_page.dart';
+import 'package:facebook_clone_bloc/app/profile_screen.dart';
 import 'package:facebook_clone_bloc/features/auth/presentation/view/screens/create_account.dart';
 import 'package:facebook_clone_bloc/features/auth/presentation/view/screens/login_screen.dart';
 import 'package:facebook_clone_bloc/features/posts/presentation/view/screens/add_post_screen.dart';
@@ -45,11 +46,11 @@ class Routes {
       //   return MaterialPageRoute(
       //       builder: (_) => StoriesScreen(stories: stories));
       //
-      // case profileScreen:
-      //   return MaterialPageRoute(
-      //       builder: (_) =>
-      //           ProfileScreen(userId: settings.arguments as String));
-      //
+      case profileScreen:
+        return MaterialPageRoute(
+            builder: (_) =>
+                ProfileScreen(userId: settings.arguments as String));
+
       case home:
         return MaterialPageRoute(builder: (_) => const HomePage());
 
